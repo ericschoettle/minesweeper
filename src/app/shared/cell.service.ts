@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 
 import { Cell } from './cell.model'
 import { Row } from './row.model'
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 @Injectable()
 export class CellService {
-  rows: Row[] = []
+  rows: FirebaseListObservable<any[]>;
 
-  constructor() { }
+  constructor(private database: AngularFireDatabase) {
+    this.rows = database.list('rows');
+  }
+
+  getRows(){
+    return this.rows;
+  }
 
   makeBoard(h, w) {
     for (var y = 0; y < h; y++) {
@@ -17,7 +24,7 @@ export class CellService {
         cellsArray.push(newCell);
       }
       var newRow = new Row (y, cellsArray);
-      this.rows.push(newRow)
+      this.rows.push(newRow);
     }
   }
 }

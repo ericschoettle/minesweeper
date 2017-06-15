@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { FirebaseListObservable } from 'angularfire2/database';
+
 import { CellService } from '../shared/cell.service';
 import { Row } from '../shared/row.model';
 
@@ -10,13 +12,12 @@ import { Row } from '../shared/row.model';
   providers: [CellService]
 })
 export class BoardComponent implements OnInit   { 
+  rows: FirebaseListObservable<any[]>;
+
   constructor(private cellService: CellService) { }
-
-  get rows() {
-    return this.cellService.rows;
-  }
-
+  
   ngOnInit() {
+    this.rows = this.cellService.getRows()
   }
 
 }

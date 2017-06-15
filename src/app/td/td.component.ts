@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Cell } from '../shared/cell.model'
 
 @Component({
   selector: 'app-td',
@@ -6,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./td.component.css']
 })
 export class TdComponent implements OnInit {
+  @Input() cell: Cell;
 
   constructor() { }
 
