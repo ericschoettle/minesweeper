@@ -16,15 +16,19 @@ export class CellService {
     return this.rows;
   }
 
-  makeBoard(h, w) {
+  makeBoard(h, w, bombRatio) {
     for (var y = 0; y < h; y++) {
       var cellsArray = [];
       for (var x = 0; x < w; x++) {
-        var newCell = new Cell (false, 0, false, x, y);
+        var newCell = new Cell (this.makeBombs(bombRatio), 0, false, x, y);
         cellsArray.push(newCell);
       }
       var newRow = new Row (y, cellsArray);
       this.rows.push(newRow);
     }
+  }
+
+  makeBombs(bombRatio) {
+    return (Math.random() < bombRatio)
   }
 }

@@ -16,7 +16,7 @@ export class BoardCreatorComponent implements OnInit {
   }
 
   sendBoard(h: number, w: number, bombs: number) {
-    this.cellService.makeBoard(h, w);
+    this.cellService.makeBoard(h, w, bombs/10);
     console.log(this.cellService.rows);
   };
 

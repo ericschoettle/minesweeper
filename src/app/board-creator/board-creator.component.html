@@ -6,17 +6,17 @@
     <div>
       <div>
         <label>Height: </label>
-        <input #height type="number">
+        <input type="number" #height>
       </div>
 
       <div>
         <label>Width: </label>
-        <input #width type="number">
+        <input type="number" #width>
       </div>
 
       <div>
         <label>Bombs per 10 spaces: </label>
-        <input #bombs type="number">
+        <input type="number" #bombs>
       </div>
       <button (click)="sendBoard(height.value, width.value, bombs.value)">New Game!!</button>
     </div>
