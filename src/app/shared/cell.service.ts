@@ -1,34 +1,51 @@
 import { Injectable } from '@angular/core';
 
+import { AngularFireDatabase, FirebaseListObservable,FirebaseObjectObservable } from 'angularfire2/database';
+
 import { Cell } from './cell.model'
 import { Row } from './row.model'
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { Board } from './board.model'
+
 
 @Injectable()
 export class CellService {
-  rows: FirebaseListObservable<any[]>;
+  boards: FirebaseListObservable<any[]>;
+  boardID: string
 
   constructor(private database: AngularFireDatabase) {
-    this.rows = database.list('rows');
+    this.boards = database.list('boards');
   }
 
-  getRows(){
-    return this.rows;
+  getBoard(key){
+    // return this.board;
   }
 
   makeBoard(h, w, bombRatio) {
+    var newBoard = new Board([]);
+    var firebaseBoard = this.boards.push(newBoard);
+    this.boardID = firebaseBoard.key;
+    debugger;
     for (var y = 0; y < h; y++) {
-      var cellsArray = [];
+      var newRow = new Row (y, []);
+      var firebaseRow = firebaseBoard.push(newRow)
       for (var x = 0; x < w; x++) {
         var newCell = new Cell (this.makeBombs(bombRatio), 0, false, x, y);
-        cellsArray.push(newCell);
+        var firebaseCell = firebaseRow.push(newCell)
       }
-      var newRow = new Row (y, cellsArray);
-      this.rows.push(newRow);
     }
   }
 
   makeBombs(bombRatio) {
     return (Math.random() < bombRatio)
+  }
+
+  findAdjacent(cell) {
+    // for (var x = -1; x <= 1; x++) {
+    //   for (var y = -1; y <= 1 y++) {
+    //     this.board
+        
+    //   }
+      
+    // }
   }
 }
