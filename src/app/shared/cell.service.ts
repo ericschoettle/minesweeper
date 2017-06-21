@@ -10,7 +10,6 @@ import { Board } from './board.model'
 @Injectable()
 export class CellService {
   boards: FirebaseListObservable<any[]>;
-  boardID: string
 
   constructor(private database: AngularFireDatabase) {
     this.boards = database.list('boards');
@@ -20,17 +19,19 @@ export class CellService {
     // return this.board;
   }
 
-  makeBoard(h, w, bombRatio) {
+  makeBoard(h: number, w: number, bombRatio: number) {
     var newBoard = new Board([]);
-    var firebaseBoard = this.boards.push(newBoard);
-    this.boardID = firebaseBoard.key;
-    debugger;
+    var boardID = this.boards.push(newBoard).key;
+    console.log(boardID)
+    var rows: FirebaseListObservable<any[]> = this.database.list('/boards/' + boardID + '/rows/')
     for (var y = 0; y < h; y++) {
       var newRow = new Row (y, []);
-      var firebaseRow = firebaseBoard.push(newRow)
+      var rowID = rows.push(newRow).key;
+      console.log(rowID)
+      var cells: FirebaseListObservable<any[]> = this.database.list('/boards/' + boardID + '/rows/' + rowID + '/cells/')
       for (var x = 0; x < w; x++) {
         var newCell = new Cell (this.makeBombs(bombRatio), 0, false, x, y);
-        var firebaseCell = firebaseRow.push(newCell)
+        cells.push(newCell)
       }
     }
   }

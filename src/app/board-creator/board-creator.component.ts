@@ -15,8 +15,8 @@ export class BoardCreatorComponent implements OnInit {
   ngOnInit() {
   }
 
-  sendBoard(h: number, w: number, bombs: number) {
-    this.cellService.makeBoard(h, w, bombs/10);
+  sendBoard(h: string, w: string, bombs: string) {
+    this.cellService.makeBoard(parseInt(h), parseInt(w), parseInt(bombs)/10);
   };
 
 }
